@@ -1,0 +1,17 @@
+mat-grid-tile {
+    background-color: purple;
+}
+mat-grid-list {
+    margin-bottom: 100px;
+}
+
+.compertiment {
+    padding: 10px;
+    font-size: 20px;
+    color: white;
+    border-right: 1px solid white;
+}
+
+.compertiment:last-child {
+    border-right: none;
+}
