@@ -41,26 +41,12 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     if (this.ticketRequestFormGroup.valid) {
-      this.tickets = [
-        {
-          initialStation: this.ticketRequestFormGroup.get('startStation').value.stationNumber,
-          initialStationName: this.ticketRequestFormGroup.get('startStation').value.name,
-          finalStation: this.ticketRequestFormGroup.get('endStation').value.stationNumber,
-          finalStationName: this.ticketRequestFormGroup.get('endStation').value.name,
-          cart: 2,
-          compartment: 3,
-          seat: 1,
-        },
-        {
-          initialStation: this.ticketRequestFormGroup.get('startStation').value.stationNumber,
-          initialStationName: this.ticketRequestFormGroup.get('startStation').value.name,
-          finalStation: this.ticketRequestFormGroup.get('endStation').value.stationNumber,
-          finalStationName: this.ticketRequestFormGroup.get('endStation').value.name,
-          cart: 2,
-          compartment: 3,
-          seat: 2,
-        }
-      ];
+      console.log(this.ticketRequestFormGroup.get('startStation').value.stationNumber, this.ticketRequestFormGroup.get('endStation').value.stationNumber, this.ticketRequestFormGroup.get('numberOfPersons').value);
+      this.tickets = this._dataProviderService.getTickets(
+        this.ticketRequestFormGroup.get('startStation').value.stationNumber,
+        this.ticketRequestFormGroup.get('endStation').value.stationNumber,
+        this.ticketRequestFormGroup.get('numberOfPersons').value
+      );
     }
   }
 }
