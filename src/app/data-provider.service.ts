@@ -14,42 +14,42 @@ export class DataProviderService {
       {
         name: "Bucuresti Nord",
         stationNumber: 1,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
       {
         name: "Ploiesti Vest",
         stationNumber: 2,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
       {
         name: "Campina",
         stationNumber: 3,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
       {
         name: "Sinaia",
         stationNumber: 4,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
       {
         name: "Busteni",
         stationNumber: 5,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
       {
         name: "Azuga",
         stationNumber: 6,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
       {
         name: "Predeal",
         stationNumber: 7,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
       {
         name: "Brasov",
         stationNumber: 8,
-        carts: this.cartsInitializer();
+        carts: this.cartsInitializer()
       },
     ];
   }
