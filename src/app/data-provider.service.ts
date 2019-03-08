@@ -171,6 +171,8 @@ export class DataProviderService {
         tickets.push(
           {
             initialStation: from,
+            initialStationName: this.stations[from - 1].name,
+            finalStationName: this.stations[to - 1].name,
             finalStation: to,
             cart,
             compartment,
