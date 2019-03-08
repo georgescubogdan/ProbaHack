@@ -200,7 +200,7 @@ export class DataProviderService {
                 .sort((a, b) => a - b));
     }
     let common: any[] = mat[0];
-    for (let i = from + 1; i < to; i++) {
+    for (let i = 1; i < to - from; i++) {
       common = common.filter((v: any) => {
         return mat[i].includes(v);
       });
