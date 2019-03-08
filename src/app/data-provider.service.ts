@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Station } from './station';
 import { Cart } from './cart';
 import { Compartment } from './compartment';
+import { Ticket } from './ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -138,4 +139,72 @@ export class DataProviderService {
       }
     ];
   }
+
+  getTickets(from: number, to: number, noTickets: number): Ticket[] {
+    let cart = this.getBestCart(from, to, noTickets);
+    let compartment = this.getBestCompartment(from, to, noTickets, cart);
+    console.log(compartment + "comp");
+    for (let i = from; i < to; i++) {
+      let c = this.stations[i].carts[cart-1].compartments[compartment-1];
+      console.log(compartment);
+      c.availability -= noTickets;
+      this.stations[i].carts[cart-1].availability -= noTickets;
+      let seatsNeeded = noTickets;
+      for (let seat of c.seats) {
+        if (seat === false) {
+          seat = true;
+          seatsNeeded--;
+        }
+        if (seatsNeeded === 0) {
+          break;
+        }
+      }
+    }
+    let c = this.stations[to].carts[cart-1].compartments[compartment-1];
+    c.availability -= noTickets;
+    let tickets: Ticket[] = [];
+    let seatsNeeded = noTickets;
+    for (let i = 0; i < c.seats.length; i++) {
+      if (c.seats[i] === false) {
+        c.seats[i] = true;
+        seatsNeeded--;
+        tickets.push(
+          {
+            initialStation: from,
+            finalStation: to,
+            cart,
+            compartment,
+            seat: i + 1
+          }
+        );
+      }
+      if (seatsNeeded === 0) {
+        break;
+      }
+    }
+    console.log(tickets);
+    return tickets;
+  }
+
+  getBestCart(from: number, to: number, noTickets: number): number {
+    return this.stations[from].carts.sort((a, b) => a.availability - b.availability)[0].cartNumber;
+  }
+
+  getBestCompartment(from: number, to: number, noTickets: number, cart: number): number {
+    let mat: any[] = [];
+    for (let i = from; i <= to; i++) {
+      mat.push((this.stations[i].carts[cart].compartments
+                .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } }))
+                .sort((a, b) => a - b));
+    }
+    let common: any[] = mat[0];
+    for (let i = from + 1; i < to; i++) {
+      common = common.filter((v: any) => {
+        return mat[i].includes(v);
+      });
+    }
+    console.log(common);
+    return common.pop();
+  }
+
 }
