@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     // this._dataProviderService.getTickets(1, 4, 4);
     // this._dataProviderService.getTickets(1, 4, 4);
     // this._dataProviderService.getTickets(1, 4, 4);
-    this._dataProviderService.getTickets(2, 3, 1);
+    //this._dataProviderService.getTickets(2, 3, 1);
 
   }
 

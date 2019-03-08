@@ -145,10 +145,10 @@ export class DataProviderService {
     let compartment = this.getBestCompartment(from, to, noTickets, cart);
     console.log(compartment + "comp");
     for (let i = from; i < to; i++) {
-      let c = this.stations[i].carts[cart-1].compartments[compartment-1];
+      let c = this.stations[i - 1].carts[cart-1].compartments[compartment-1];
       console.log(compartment);
       c.availability -= noTickets;
-      this.stations[i].carts[cart-1].availability -= noTickets;
+      this.stations[i - 1].carts[cart-1].availability -= noTickets;
       let seatsNeeded = noTickets;
       for (let seat of c.seats) {
         if (seat === false) {
@@ -160,7 +160,7 @@ export class DataProviderService {
         }
       }
     }
-    let c = this.stations[to].carts[cart-1].compartments[compartment-1];
+    let c = this.stations[to - 1].carts[cart - 1].compartments[compartment - 1];
     c.availability -= noTickets;
     let tickets: Ticket[] = [];
     let seatsNeeded = noTickets;
@@ -189,24 +189,24 @@ export class DataProviderService {
   }
 
   getBestCart(from: number, to: number, noTickets: number): number {
-    return this.stations[from].carts.sort((a, b) => a.availability - b.availability)[0].cartNumber;
+    return this.stations[from - 1].carts.sort((a, b) => a.availability - b.availability)[0].cartNumber;
   }
 
   getBestCompartment(from: number, to: number, noTickets: number, cart: number): number {
     let mat: any[] = [];
     for (let i = from; i <= to; i++) {
-      mat.push((this.stations[i].carts[cart].compartments
+      mat.push((this.stations[i - 1].carts[cart - 1].compartments
                 .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } }))
                 .sort((a, b) => a - b));
     }
     let common: any[] = mat[0];
-    for (let i = 1; i < to - from; i++) {
+    for (let i = 0; i < to - from; i++) {
       common = common.filter((v: any) => {
         return mat[i].includes(v);
       });
     }
     console.log(common);
-    return common.pop();
+    return common[0];
   }
 
 }
