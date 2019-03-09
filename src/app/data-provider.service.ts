@@ -142,13 +142,14 @@ export class DataProviderService {
 
   getTickets(from: number, to: number, noTickets: number): Ticket[] {
     let cart = this.getBestCart(from, to, noTickets);
+    console.log(cart + " cart");
     let compartment = this.getBestCompartment(from, to, noTickets, cart);
     console.log(compartment + "comp");
     for (let i = from; i < to; i++) {
-      let c = this.stations[i - 1].carts[cart-1].compartments[compartment-1];
+      let c = this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments[compartment-1];
       console.log(compartment);
       c.availability -= noTickets;
-      this.stations[i - 1].carts[cart-1].availability -= noTickets;
+      this.stations[i - 1].carts.find(c => c.cartNumber === cart).availability -= noTickets;
       let seatsNeeded = noTickets;
       for (let seat of c.seats) {
         if (seat === false) {
@@ -160,7 +161,7 @@ export class DataProviderService {
         }
       }
     }
-    let c = this.stations[to - 1].carts[cart - 1].compartments[compartment - 1];
+    let c = this.stations[to - 1].carts.find(c => c.cartNumber === cart).compartments[compartment - 1];
     c.availability -= noTickets;
     let tickets: Ticket[] = [];
     let seatsNeeded = noTickets;
@@ -189,16 +190,18 @@ export class DataProviderService {
   }
 
   getBestCart(from: number, to: number, noTickets: number): number {
-    return this.stations[from - 1].carts.sort((a, b) => a.availability - b.availability)[0].cartNumber;
+    return this.stations[from - 1].carts.sort((a, b) => b.availability - a.availability)[0].cartNumber;
   }
 
   getBestCompartment(from: number, to: number, noTickets: number, cart: number): number {
     let mat: any[] = [];
     for (let i = from; i <= to; i++) {
-      mat.push((this.stations[i - 1].carts[cart - 1].compartments
+      mat.push((this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments
+                //.sort((a, b) => a.availability - b.availability)
                 .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } }))
                 .sort((a, b) => a - b));
     }
+    console.log(mat);
     let common: any[] = mat[0];
     for (let i = 0; i < to - from; i++) {
       common = common.filter((v: any) => {
