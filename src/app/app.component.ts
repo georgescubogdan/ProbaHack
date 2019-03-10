@@ -15,6 +15,9 @@ export class AppComponent implements OnInit {
   selectedStation: Station = null;
   startStations: Station[] = null;
   tickets: Ticket[] = null;
+  displayQuestion = false;
+  displayNoSeatsError = false;
+  ticketsNumber = null;
 
   ticketRequestFormGroup = new FormGroup({
     'numberOfPersons': new FormControl(1, [Validators.required, Validators.min(1), Validators.max(5)]),
@@ -26,81 +29,81 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.startStations = this.stations.slice(0, this.stations.length - 1);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
-    this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
+    // this._dataProviderService.getTickets(1, 4, 5);
 
   }
 
@@ -115,13 +118,56 @@ export class AppComponent implements OnInit {
     return this._dataProviderService.stations;
   }
 
+  getNumberOfAvailableSeats(from: number, to: number): number {
+    let numberOfAvSeats = 400;
+
+    this.stations.filter(s => s.stationNumber >= from && s.stationNumber < to).forEach(station => {
+      let stAvSeats = 0;
+      station.carts.forEach(cart => {
+        stAvSeats += cart.availability;
+      });
+      numberOfAvSeats = Math.min(numberOfAvSeats, stAvSeats);
+    });
+
+    console.log(numberOfAvSeats);
+    
+    return numberOfAvSeats;
+  }
+
   onSubmit() {
+    this.displayNoSeatsError = false;
     if (this.ticketRequestFormGroup.valid) {
-      this.tickets = this._dataProviderService.getTickets(
-        this.ticketRequestFormGroup.get('startStation').value.stationNumber,
-        this.ticketRequestFormGroup.get('endStation').value.stationNumber,
-        this.ticketRequestFormGroup.get('numberOfPersons').value
-      );
+      const avSeats = this.getNumberOfAvailableSeats(this.ticketRequestFormGroup.get('startStation').value.stationNumber,
+        this.ticketRequestFormGroup.get('endStation').value.stationNumber);
+      if (avSeats === 0) {
+        this.displayNoSeatsError = true;
+        // this.ticketRequestFormGroup.disable();
+      }
+      if (this.ticketRequestFormGroup.get('numberOfPersons').value > avSeats) {
+        this.displayQuestion = true;
+        this.ticketsNumber = avSeats;
+      } else {
+        this.getTickets();
+      }
     }
+  }
+
+  confirmedBuy() {
+    this.displayQuestion = false;
+    this.getTickets();
+    this.displayNoSeatsError = true;
+    // this.ticketRequestFormGroup.disable();
+  }
+
+  declinedBuy() {
+    this.displayQuestion = false;
+  }
+
+  getTickets() {
+    this.tickets = this._dataProviderService.getTickets(
+      this.ticketRequestFormGroup.get('startStation').value.stationNumber,
+      this.ticketRequestFormGroup.get('endStation').value.stationNumber,
+      this.ticketRequestFormGroup.get('numberOfPersons').value
+    );
   }
 }
