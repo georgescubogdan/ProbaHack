@@ -158,7 +158,6 @@ export class DataProviderService {
       }
     }
     const c = this.stations[to - 1].carts.find(c => c.cartNumber === cart).compartments.find(c => c.compartmentNumber == compartment);
-    c.availability -= noTickets;
     const tickets: Ticket[] = [];
     let seatsNeeded = noTickets;
     for (let i = 0; i < c.seats.length; i++) {
@@ -249,13 +248,14 @@ export class DataProviderService {
 
   getBestCompartment(from: number, to: number, noTickets: number, cart: number): number {
     const mat: any[] = [];
-    for (let i = from; i <= to; i++) {
+    for (let i = from; i < to; i++) {
       mat.push((this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments
-      .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } }))
-      .sort((a, b) => a - b));
+      .sort((a, b) => (b.availability - a.availability))
+      .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } })));
+      // .sort((a, b) => a - b));
     }
     let common: any[] = mat[0];
-    for (let i = 0; i < to - from; i++) {
+    for (let i = 0; i < to - from - 1; i++) {
       common = common.filter((v: any) => {
         return mat[i].includes(v);
       });
@@ -265,13 +265,13 @@ export class DataProviderService {
 
   getMaxCompartmentAvailability(from: number, to: number, cart: number) {
     const mat: any[] = [];
-    for (let i = from; i <= to; i++) {
+    for (let i = from; i < to; i++) {
       mat.push((this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments
       .sort((a, b) => a.availability - b.availability)
       .map(a => a.availability )));
     }
     let common: any[] = mat[0];
-    for (let i = 0; i < to - from; i++) {
+    for (let i = 0; i < to - from - 1; i++) {
       common = common.filter((v: any) => {
         return mat[i].includes(v);
       });

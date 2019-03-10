@@ -10,11 +10,13 @@ import { TrainDisplayerComponent } from './train-displayer/train-displayer.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {OverlayContainer, OverlayModule} from '@angular/cdk/overlay';
+import { ArraySortPipe } from './utils/array-sort.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TrainDisplayerComponent
+    TrainDisplayerComponent,
+    ArraySortPipe
   ],
   imports: [
     BrowserModule,
