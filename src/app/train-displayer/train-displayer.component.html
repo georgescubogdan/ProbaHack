@@ -1,7 +1,7 @@
-<mat-grid-list [cols]="stations[stationNumber].carts.length" rowHeight="100px">
+<mat-grid-list [cols]="stations[stationNumber-1].carts.length" rowHeight="100px">
     <mat-grid-tile 
-        *ngFor="let cart of stations[stationNumber].carts">
-                <div class="compertiment" *ngFor="let compartment of cart.compartments">
+        *ngFor="let cart of getSortedCarts(stations[stationNumber-1])">
+                <div class="compertiment" *ngFor="let compartment of getSortedCompartments(cart)">
                     {{ compartment.availability }}
                     <mat-divider [vertical]="true"></mat-divider>
                 </div>
