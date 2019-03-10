@@ -68,7 +68,7 @@
           </mat-form-field>
           <div *ngIf="selectedStation">
             <mat-accordion>
-              <mat-expansion-panel *ngFor="let cart of selectedStation.carts">
+              <mat-expansion-panel *ngFor="let cart of getSortedCarts(selectedStation)">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
                     Vagon {{cart.cartNumber}} ocupat: <mat-progress-bar mode="determinate" [value]="(80 - cart.availability) / 80 * 100" class="progress-bar"></mat-progress-bar> {{80 - cart.availability}}/80

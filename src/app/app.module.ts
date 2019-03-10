@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { MaterialContainerModule } from './material-container/material-container.module';
 import { TrainDisplayerComponent } from './train-displayer/train-displayer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ArraySortPipe } from './utils/array-sort.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TrainDisplayerComponent
+    TrainDisplayerComponent,
+    ArraySortPipe
   ],
   imports: [
     BrowserModule,

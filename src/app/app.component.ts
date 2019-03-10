@@ -159,6 +159,10 @@ export class AppComponent implements OnInit {
     // this.ticketRequestFormGroup.disable();
   }
 
+  getSortedCarts(station: Station) {
+    return station.carts.sort((a, b) => a.cartNumber - b.cartNumber);
+  }
+
   declinedBuy() {
     this.displayQuestion = false;
   }
