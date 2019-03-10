@@ -29,6 +29,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.startStations = this.stations.slice(0, this.stations.length - 1);
+    this.ticketRequestFormGroup.get('startStation').valueChanges.subscribe(data => this.displayNoSeatsError = false);
     // this._dataProviderService.getTickets(1, 4, 5);
     // this._dataProviderService.getTickets(1, 4, 5);
     // this._dataProviderService.getTickets(1, 4, 5);
@@ -142,8 +143,7 @@ export class AppComponent implements OnInit {
       if (avSeats === 0) {
         this.displayNoSeatsError = true;
         // this.ticketRequestFormGroup.disable();
-      }
-      if (this.ticketRequestFormGroup.get('numberOfPersons').value > avSeats) {
+      } else if (this.ticketRequestFormGroup.get('numberOfPersons').value > avSeats) {
         this.displayQuestion = true;
         this.ticketsNumber = avSeats;
       } else {
