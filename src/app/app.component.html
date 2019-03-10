@@ -75,7 +75,7 @@
                   </mat-panel-title>
                 </mat-expansion-panel-header>
 
-                <p *ngFor="let compartment of cart.compartments" class="compartment-p">
+                <p *ngFor="let compartment of getSortedCompartments(cart)" class="compartment-p">
                   Compartiment {{compartment.compartmentNumber}} ocupat: <mat-progress-bar mode="determinate" [value]="(8 - compartment.availability) / 8 * 100" class="progress-bar-2"></mat-progress-bar> {{8 - compartment.availability}}/8
                 </p>
               </mat-expansion-panel>

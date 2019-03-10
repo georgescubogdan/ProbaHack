@@ -3,6 +3,7 @@ import { DataProviderService } from './data-provider.service';
 import { Station } from './station';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ticket } from './ticket';
+import { Cart } from './cart';
 
 @Component({
   selector: 'app-root',
@@ -159,12 +160,16 @@ export class AppComponent implements OnInit {
     // this.ticketRequestFormGroup.disable();
   }
 
+  declinedBuy() {
+    this.displayQuestion = false;
+  }
+
   getSortedCarts(station: Station) {
     return station.carts.sort((a, b) => a.cartNumber - b.cartNumber);
   }
 
-  declinedBuy() {
-    this.displayQuestion = false;
+  getSortedCompartments(cart: Cart){
+    return cart.compartments.sort((a, b) => a.compartmentNumber - b.compartmentNumber);
   }
 
   getTickets() {
