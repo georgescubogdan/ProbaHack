@@ -1,16 +1,9 @@
-<div *ngFor="let i of stations">
-    
-</div>
-
-<mat-grid-list *ngFor="let station of stations" [cols]="station.carts.length" rowHeight="100px">
+<mat-grid-list [cols]="stations[stationNumber].carts.length" rowHeight="100px">
     <mat-grid-tile 
-        *ngFor="let cart of station.carts">
-        
-
+        *ngFor="let cart of stations[stationNumber].carts">
                 <div class="compertiment" *ngFor="let compartment of cart.compartments">
                     {{ compartment.availability }}
                     <mat-divider [vertical]="true"></mat-divider>
                 </div>
-
     </mat-grid-tile>
 </mat-grid-list>

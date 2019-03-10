@@ -1,3 +1,4 @@
+<mat-checkbox (change)="onSetTheme($event)">Tema intunecata</mat-checkbox>
 <div class="container">
   <div class="row">
 
@@ -9,10 +10,10 @@
         </mat-card-header>
         <mat-card-content>
           <form [formGroup]="ticketRequestFormGroup" (ngSubmit)="onSubmit()" class="ticketRequestForm">
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
               <input matInput placeholder="Numar bilete" type="number" min="1" max="5" formControlName="numberOfPersons" name="numberOfPersons">
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="example-full-width">
               <mat-select placeholder="Statie plecare" formControlName="startStation" name="startStation" required>
                 <mat-option [value]="null">--</mat-option>
                 <mat-option *ngFor="let station of startStations" [value]="station">
@@ -20,7 +21,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field *ngIf="ticketRequestFormGroup.get('startStation').value">
+            <mat-form-field class="example-full-width" *ngIf="ticketRequestFormGroup.get('startStation').value">
               <mat-select placeholder="Statie oprire" formControlName="endStation" name="endStation" required>
                 <mat-option [value]="null">--</mat-option>
                 <mat-option *ngFor="let station of getEndStations()" [value]="station">
@@ -28,7 +29,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <button mat-button color="primary" type="submit">Cumpara</button>
+            <button mat-stroked-button color="accent" type="submit">Cumpara</button>
           </form>
         </mat-card-content>
       </mat-card>
@@ -61,6 +62,7 @@
             </mat-select>            
           </mat-form-field>
           <div *ngIf="selectedStation">
+            <app-train-displayer fxShow="true" fxHide.lt-md="true" [stationNumber]="selectedStation.stationNumber"></app-train-displayer>
             <mat-accordion>
               <mat-expansion-panel *ngFor="let cart of selectedStation.carts">
                 <mat-expansion-panel-header>
@@ -82,6 +84,7 @@
     
   </div>
 </div>
+
 
   
 
