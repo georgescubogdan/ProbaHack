@@ -3,6 +3,7 @@ import { DataProviderService } from './data-provider.service';
 import { Station } from './station';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ticket } from './ticket';
+import { Cart } from './cart';
 import { OverlayContainer} from '@angular/cdk/overlay';
 import { DOCUMENT } from '@angular/common';
 
@@ -154,6 +155,7 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     this.displayNoSeatsError = false;
+    this.tickets = null;
     if (this.ticketRequestFormGroup.valid) {
       const avSeats = this.getNumberOfAvailableSeats(this.ticketRequestFormGroup.get('startStation').value.stationNumber,
         this.ticketRequestFormGroup.get('endStation').value.stationNumber);
@@ -176,12 +178,16 @@ export class AppComponent implements OnInit {
     // this.ticketRequestFormGroup.disable();
   }
 
+  declinedBuy() {
+    this.displayQuestion = false;
+  }
+
   getSortedCarts(station: Station) {
     return station.carts.sort((a, b) => a.cartNumber - b.cartNumber);
   }
 
-  declinedBuy() {
-    this.displayQuestion = false;
+  getSortedCompartments(cart: Cart){
+    return cart.compartments.sort((a, b) => a.compartmentNumber - b.compartmentNumber);
   }
 
   getTickets() {
