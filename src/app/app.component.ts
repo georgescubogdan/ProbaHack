@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding, ViewChild, ElementRef, Inject } from '@angular/core';
 import { DataProviderService } from './data-provider.service';
 import { Station } from './station';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ticket } from './ticket';
 import { Cart } from './cart';
+import { OverlayContainer} from '@angular/cdk/overlay';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +28,22 @@ export class AppComponent implements OnInit {
     'endStation': new FormControl(null, Validators.required)
   });
 
-  constructor(private _dataProviderService: DataProviderService) {}
+  constructor(private _dataProviderService: DataProviderService, private overlayContainer: OverlayContainer, @Inject(DOCUMENT) private document: any) {}
+  @HostBinding('class') componentCssClass;
+
+  onSetTheme(event) {
+      let theme = 'light-theme';
+      if (event.checked) {
+        theme = 'dark-theme';
+      }
+      if (theme == 'dark-theme') {
+        this.document.body.style.background = '#303030';
+      } else {
+        this.document.body.style.background = '';
+      }
+      this.overlayContainer.getContainerElement().classList.add(theme);
+      this.componentCssClass = theme;
+    }
 
   ngOnInit(): void {
     this.startStations = this.stations.slice(0, this.stations.length - 1);

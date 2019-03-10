@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataProviderService } from '../data-provider.service';
 import { Station } from '../station';
 @Component({
@@ -8,6 +8,7 @@ import { Station } from '../station';
 })
 export class TrainDisplayerComponent implements OnInit {
   stations: Station[];
+  @Input() stationNumber: number;
   constructor(private dataProvider: DataProviderService) { }
 
   ngOnInit() {

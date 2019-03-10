@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { MaterialContainerModule } from './material-container/material-container.module';
 import { TrainDisplayerComponent } from './train-displayer/train-displayer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {OverlayContainer, OverlayModule} from '@angular/cdk/overlay';
 import { ArraySortPipe } from './utils/array-sort.pipe';
 
 @NgModule({
@@ -24,7 +26,9 @@ import { ArraySortPipe } from './utils/array-sort.pipe';
     DragDropModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FlexLayoutModule,
+    FormsModule,
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent]
