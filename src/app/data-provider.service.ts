@@ -250,8 +250,9 @@ export class DataProviderService {
     const mat: any[] = [];
     for (let i = from; i < to; i++) {
       mat.push((this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments
-      .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } }))
-      .sort((a, b) => a - b));
+      .sort((a, b) => (b.availability - a.availability))
+      .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } })));
+      // .sort((a, b) => a - b));
     }
     let common: any[] = mat[0];
     for (let i = 0; i < to - from - 1; i++) {
