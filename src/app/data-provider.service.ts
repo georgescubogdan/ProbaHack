@@ -13,42 +13,42 @@ export class DataProviderService {
   constructor() {
     this.stations = [
       {
-        name: "Bucuresti Nord",
+        name: 'Bucuresti Nord',
         stationNumber: 1,
         carts: this.cartsInitializer()
       },
       {
-        name: "Ploiesti Vest",
+        name: 'Ploiesti Vest',
         stationNumber: 2,
         carts: this.cartsInitializer()
       },
       {
-        name: "Campina",
+        name: 'Campina',
         stationNumber: 3,
         carts: this.cartsInitializer()
       },
       {
-        name: "Sinaia",
+        name: 'Sinaia',
         stationNumber: 4,
         carts: this.cartsInitializer()
       },
       {
-        name: "Busteni",
+        name: 'Busteni',
         stationNumber: 5,
         carts: this.cartsInitializer()
       },
       {
-        name: "Azuga",
+        name: 'Azuga',
         stationNumber: 6,
         carts: this.cartsInitializer()
       },
       {
-        name: "Predeal",
+        name: 'Predeal',
         stationNumber: 7,
         carts: this.cartsInitializer()
       },
       {
-        name: "Brasov",
+        name: 'Brasov',
         stationNumber: 8,
         carts: this.cartsInitializer()
       },
@@ -140,14 +140,10 @@ export class DataProviderService {
     ];
   }
 
-  getTickets(from: number, to: number, noTickets: number): Ticket[] {
-    let cart = this.getBestCart(from, to, noTickets);
-    console.log(cart + " cart");
-    let compartment = this.getBestCompartment(from, to, noTickets, cart);
-    console.log(compartment + "comp");
+  ticketGenerator(from: number, to: number, noTickets: number, cart: number): Ticket[] {
+    const compartment = this.getBestCompartment(from, to, noTickets, cart);
     for (let i = from; i < to; i++) {
-      let c = this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments[compartment-1];
-      console.log(compartment);
+      const c = this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments.find(c => c.compartmentNumber == compartment);
       c.availability -= noTickets;
       this.stations[i - 1].carts.find(c => c.cartNumber === cart).availability -= noTickets;
       let seatsNeeded = noTickets;
@@ -161,9 +157,9 @@ export class DataProviderService {
         }
       }
     }
-    let c = this.stations[to - 1].carts.find(c => c.cartNumber === cart).compartments[compartment - 1];
+    const c = this.stations[to - 1].carts.find(c => c.cartNumber === cart).compartments.find(c => c.compartmentNumber == compartment);
     c.availability -= noTickets;
-    let tickets: Ticket[] = [];
+    const tickets: Ticket[] = [];
     let seatsNeeded = noTickets;
     for (let i = 0; i < c.seats.length; i++) {
       if (c.seats[i] === false) {
@@ -179,14 +175,70 @@ export class DataProviderService {
             compartment,
             seat: i + 1
           }
-        );
-      }
+          );
+        }
       if (seatsNeeded === 0) {
-        break;
+          break;
+        }
+      }
+    return tickets;
+  }
+
+  getTickets(from: number, to: number, noTickets: number): Ticket[] {
+    const cart = this.getBestCart(from, to, noTickets);
+    console.log(this.stations[from - 1].carts.find(c => c.cartNumber === cart).availability);
+    let cartTicketsNum = noTickets;
+    if (noTickets == 0 || this.stations[from - 1].carts.find(c => c.cartNumber === cart).availability === 0) {
+      return [];
+      // TODO: no tickets available
+    }
+    if (this.stations[from - 1].carts.find(c => c.cartNumber === cart).availability < noTickets) {
+      cartTicketsNum = this.stations[from - 1].carts.find(c => c.cartNumber === cart).availability
+    }
+
+    const max = this.getMaxCompartmentAvailability(from, to, cart);
+    console.log('max ' + max);
+    if (max >= cartTicketsNum) {
+      return this.ticketGenerator(from, to, cartTicketsNum, cart);
+    } else {
+      if (max === 1) {
+        let tickets: Ticket[] = [];
+        for (let i = 1; i <= cartTicketsNum; i++) {
+          tickets = tickets.concat(this.ticketGenerator(from, to, 1, cart));
+        }
+        return tickets.concat(this.getTickets(from, to, noTickets - cartTicketsNum));
+
+      } else if (max === 2) {
+        let tickets: Ticket[] = [];
+        if (cartTicketsNum === 5) {
+          tickets = tickets.concat(this.ticketGenerator(from, to, 2, cart));
+          tickets = tickets.concat(this.ticketGenerator(from, to, 1, cart));
+          tickets = tickets.concat(this.ticketGenerator(from, to, 2, cart));
+        } else {
+          tickets = tickets.concat(this.ticketGenerator(from, to, max, cart));
+          tickets = tickets.concat(this.ticketGenerator(from, to, noTickets - max, cart));
+        }
+        return tickets.concat(this.getTickets(from, to, noTickets - cartTicketsNum));
+
+      } else if (max === 3) {
+        let tickets: Ticket[] = [];
+        if (cartTicketsNum === 4) {
+          tickets = tickets.concat(this.ticketGenerator(from, to, 2, cart));
+          tickets = tickets.concat(this.ticketGenerator(from, to, 2, cart));
+        } else {
+          tickets = tickets.concat(this.ticketGenerator(from, to, 3, cart));
+          tickets = tickets.concat(this.ticketGenerator(from, to, 2, cart));
+        }
+        return tickets.concat(this.getTickets(from, to, noTickets - cartTicketsNum));
+
+      } else {
+        let tickets: Ticket[] = [];
+        tickets = tickets.concat(this.ticketGenerator(from, to, 3, cart));
+        tickets = tickets.concat(this.ticketGenerator(from, to, 2, cart));
+        return tickets.concat(this.getTickets(from, to, noTickets - cartTicketsNum));
       }
     }
-    console.log(tickets);
-    return tickets;
+
   }
 
   getBestCart(from: number, to: number, noTickets: number): number {
@@ -194,21 +246,35 @@ export class DataProviderService {
   }
 
   getBestCompartment(from: number, to: number, noTickets: number, cart: number): number {
-    let mat: any[] = [];
+    const mat: any[] = [];
     for (let i = from; i <= to; i++) {
       mat.push((this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments
-                //.sort((a, b) => a.availability - b.availability)
-                .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } }))
-                .sort((a, b) => a - b));
+      .map(a => { if (a.availability >= noTickets) { return a.compartmentNumber; } }))
+      .sort((a, b) => a - b));
     }
-    console.log(mat);
     let common: any[] = mat[0];
     for (let i = 0; i < to - from; i++) {
       common = common.filter((v: any) => {
         return mat[i].includes(v);
       });
     }
-    console.log(common);
+    return common[0];
+  }
+
+  getMaxCompartmentAvailability(from: number, to: number, cart: number) {
+    const mat: any[] = [];
+    for (let i = from; i <= to; i++) {
+      mat.push((this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments
+      .sort((a, b) => a.availability - b.availability)
+      .map(a => a.availability )));
+    }
+    let common: any[] = mat[0];
+    for (let i = 0; i < to - from; i++) {
+      common = common.filter((v: any) => {
+        return mat[i].includes(v);
+      });
+    }
+    common.sort((a, b) => b - a);
     return common[0];
   }
 
