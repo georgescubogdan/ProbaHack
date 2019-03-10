@@ -144,7 +144,7 @@ export class DataProviderService {
     const compartment = this.getBestCompartment(from, to, noTickets, cart);
     for (let i = from; i < to; i++) {
       const c = this.stations[i - 1].carts.find(c => c.cartNumber === cart).compartments.find(c => c.compartmentNumber == compartment);
-      c.availability -= noTickets;
+       c.availability -= noTickets;
       this.stations[i - 1].carts.find(c => c.cartNumber === cart).availability -= noTickets;
       let seatsNeeded = noTickets;
       for (let seat of c.seats) {
@@ -186,7 +186,6 @@ export class DataProviderService {
 
   getTickets(from: number, to: number, noTickets: number): Ticket[] {
     const cart = this.getBestCart(from, to, noTickets);
-    console.log(this.stations[from - 1].carts.find(c => c.cartNumber === cart).availability);
     let cartTicketsNum = noTickets;
     if (noTickets == 0 || this.stations[from - 1].carts.find(c => c.cartNumber === cart).availability === 0) {
       return [];
@@ -197,7 +196,6 @@ export class DataProviderService {
     }
 
     const max = this.getMaxCompartmentAvailability(from, to, cart);
-    console.log('max ' + max);
     if (max >= cartTicketsNum) {
       return this.ticketGenerator(from, to, cartTicketsNum, cart);
     } else {

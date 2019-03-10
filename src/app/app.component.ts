@@ -117,7 +117,6 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     if (this.ticketRequestFormGroup.valid) {
-      console.log(this.ticketRequestFormGroup.get('startStation').value.stationNumber, this.ticketRequestFormGroup.get('endStation').value.stationNumber, this.ticketRequestFormGroup.get('numberOfPersons').value);
       this.tickets = this._dataProviderService.getTickets(
         this.ticketRequestFormGroup.get('startStation').value.stationNumber,
         this.ticketRequestFormGroup.get('endStation').value.stationNumber,
