@@ -48,7 +48,7 @@
             <mat-list role="list" *ngIf="tickets">
               <mat-list-item role="listitem" *ngFor="let ticket of tickets">Plecare: {{ticket.initialStationName}}. Destinatie: {{ticket.finalStationName}}. Vagon: {{ticket.cart}}. Compartiment:{{ticket.compartment}}. Loc: {{ticket.seat}}.</mat-list-item>
             </mat-list>
-            <h3 class="error-h3" *ngIf="displayNoSeatsError">Nu mai sunt bilete disponibile pe ruta selectata</h3>
+            <h3 class="error-h3" *ngIf="displayNoSeatsError">Nu mai sunt locuri disponibile pe ruta selectata.</h3>
         </mat-card-content>
       </mat-card>
 
