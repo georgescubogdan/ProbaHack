@@ -155,6 +155,7 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     this.displayNoSeatsError = false;
+    this.tickets = null;
     if (this.ticketRequestFormGroup.valid) {
       const avSeats = this.getNumberOfAvailableSeats(this.ticketRequestFormGroup.get('startStation').value.stationNumber,
         this.ticketRequestFormGroup.get('endStation').value.stationNumber);
