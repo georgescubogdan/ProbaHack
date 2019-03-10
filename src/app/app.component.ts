@@ -14,7 +14,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class AppComponent implements OnInit {
   
-  title = 'ProbaHack';
+  title = 'ProbaHack Echipa Mentor';
   selectedStation: Station = null;
   startStations: Station[] = null;
   tickets: Ticket[] = null;
