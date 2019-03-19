@@ -1,4 +1,8 @@
-# ProbaHack
+# Train Ticket Allocator POC
+
+This is a POC for a train seat allocator service.
+It accounts for all the possible scenarios between a given number of stations, wagons, compartments and seats.
+To prove the algorithm works I added a single train that goes between 8 stations, has 5 wagons with 80 seats each, distributed along 10 compartments.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
 
